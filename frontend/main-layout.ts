@@ -1,12 +1,24 @@
 import {html} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 import '@vaadin/app-layout';
 import '@vaadin/app-layout/vaadin-drawer-toggle.js';
 import {Layout} from 'Frontend/views/view';
-import {views} from 'Frontend/routes';
+import {router} from "Frontend/index";
+import {RouterLocation} from '@vaadin/router';
+import {views} from "Frontend/routes";
+import './components/active-link';
 
 @customElement('main-layout')
 export class MainLayout extends Layout {
+
+	@property()
+	location: RouterLocation;
+
+	constructor() {
+		super();
+		this.location = router.location;
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
 		this.classList.add('flex', 'h-full', 'w-full');
@@ -23,7 +35,7 @@ export class MainLayout extends Layout {
 				<div slot="drawer">
 					<div class="flex flex-col h-full m-l spacing-b-s">
 						${views.map((view) => html`
-							<a href=${view.path} > ${view.title} </a>
+							<active-link .viewRoute="${view}" .active=${this.location.getUrl() === router.urlForPath(view.path)} />
 						`)}
 					</div>
 				</div>
