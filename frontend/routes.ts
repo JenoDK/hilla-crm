@@ -6,6 +6,7 @@ export type ViewRoute = Route & {
 	title?: string;
 	icon?: string;
 	children?: ViewRoute[];
+	active?: boolean;
 };
 
 export const views: ViewRoute[] = [
