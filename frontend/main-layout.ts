@@ -4,6 +4,7 @@ import '@vaadin/app-layout';
 import '@vaadin/app-layout/vaadin-drawer-toggle.js';
 import {Layout} from 'Frontend/views/view';
 import {views} from 'Frontend/routes';
+import {uiStore} from "Frontend/stores/app-store";
 
 @customElement('main-layout')
 export class MainLayout extends Layout {
@@ -23,7 +24,7 @@ export class MainLayout extends Layout {
 				<div slot="drawer">
 					<div class="flex flex-col h-full m-l spacing-b-s">
 						${views.map((view) => html`
-							<a href=${view.path} > ${view.title} </a>
+							<a href=${view.path} style="${uiStore.activeRoutePath === view.path ? 'font-weight: bold;' : ''}"> ${view.title} </a>
 						`)}
 					</div>
 				</div>

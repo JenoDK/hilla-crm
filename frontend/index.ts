@@ -9,4 +9,5 @@ router.setRoutes(routes);
 window.addEventListener('vaadin-router-location-changed', (e) => {
 	const activeRoute = router.location.route as ViewRoute;
 	document.title = activeRoute.title ?? 'Hilla CRM';
+	uiStore.activeRoutePath = activeRoute.path;
 });
