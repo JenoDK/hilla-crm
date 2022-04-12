@@ -6,7 +6,6 @@ class Message {
 
 export class UiStore {
 	message = new Message();
-	activeRoutePath = '';
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true });
