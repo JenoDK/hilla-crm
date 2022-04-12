@@ -1,6 +1,8 @@
 import {MobxLitElement} from '@adobe/lit-mobx';
+import { AfterEnterObserver, BeforeLeaveObserver, RouterLocation } from '@vaadin/router';
 import {applyTheme} from 'Frontend/generated/theme';
 import {autorun, IAutorunOptions, IReactionDisposer, IReactionOptions, IReactionPublic, reaction} from 'mobx';
+import {ViewRoute} from "Frontend/routes";
 
 export class MobxElement extends MobxLitElement {
 	private disposers: IReactionDisposer[] = [];
@@ -47,10 +49,20 @@ export class MobxElement extends MobxLitElement {
  *
  * The view class also brings the MobX dependency for state management.
  */
-export class View extends MobxElement {
+export class View extends MobxElement implements AfterEnterObserver, BeforeLeaveObserver {
 	createRenderRoot(): Element | ShadowRoot {
 		// Do not use a shadow root
 		return this;
+	}
+
+	onAfterEnter(location: RouterLocation) {
+		const route = location.route as ViewRoute;
+		route.active = true;
+	}
+
+	onBeforeLeave(location: RouterLocation) {
+		const route = location.route as ViewRoute;
+		route.active = false;
 	}
 }
 
