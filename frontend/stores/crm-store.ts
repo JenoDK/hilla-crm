@@ -5,6 +5,8 @@ import Contact from 'Frontend/generated/com/example/application/data/entity/Cont
 import Status from 'Frontend/generated/com/example/application/data/entity/Status';
 import { CrmEndpoint } from 'Frontend/generated/endpoints';
 import { uiStore } from './app-store';
+import {cacheable} from "Frontend/stores/cacheable";
+import CrmDataModel from "Frontend/generated/com/example/application/data/endpoint/CrmEndpoint/CrmDataModel";
 
 export class CrmStore {
 	contacts: Contact[] = [];
@@ -27,7 +29,11 @@ export class CrmStore {
 	}
 
 	async initFromServer() {
-		const data = await CrmEndpoint.getCrmData();
+		const data = await cacheable(
+			CrmEndpoint.getCrmData,
+			'crm',
+			CrmDataModel.createEmptyValue()
+		);
 
 		runInAction(() => {
 			this.contacts = data.contacts;

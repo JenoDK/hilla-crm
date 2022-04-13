@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.security.PermitAll;
+
 import com.example.application.data.entity.Company;
 import com.example.application.data.entity.Contact;
 import com.example.application.data.entity.Status;
@@ -16,7 +18,7 @@ import dev.hilla.Endpoint;
 import dev.hilla.Nonnull;
 
 @Endpoint
-@AnonymousAllowed
+@PermitAll
 public class CrmEndpoint {
 
 	private final CompanyRepository companyRepository;

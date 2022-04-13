@@ -16,7 +16,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  */
 @SpringBootApplication
 @Theme(value = "hilla-crm")
-@PWA(name = "hilla-crm", shortName = "hilla-crm", offlineResources = {})
+@PWA(name = "hilla-crm", shortName = "CRM", offlineResources = {"images/logo.png"})
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
 	public static void main(String[] args) {
