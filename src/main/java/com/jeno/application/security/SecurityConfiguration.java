@@ -1,4 +1,4 @@
-package com.example.application.security;
+package com.jeno.application.security;
 
 import java.util.Base64;
 
@@ -32,7 +32,10 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 
 		setStatelessAuthentication(http,
 				new SecretKeySpec(Base64.getDecoder().decode(appSecret), JwsAlgorithms.HS256),
-				"com.example.application");
+				"com.jeno.application");
+
+		// Configure the login page.
+		http.oauth2Login().loginPage("/login").permitAll();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.example.application.data.entity;
+package com.jeno.application.data.entity;
 
 import javax.persistence.Entity;
 

@@ -1,4 +1,4 @@
-package com.example.application.data.endpoint;
+package com.jeno.application.data.endpoint;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,13 +6,12 @@ import java.util.UUID;
 
 import javax.annotation.security.PermitAll;
 
-import com.example.application.data.entity.Company;
-import com.example.application.data.entity.Contact;
-import com.example.application.data.entity.Status;
-import com.example.application.data.repository.CompanyRepository;
-import com.example.application.data.repository.ContactRepository;
-import com.example.application.data.repository.StatusRepository;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.jeno.application.data.entity.Company;
+import com.jeno.application.data.entity.Contact;
+import com.jeno.application.data.entity.Status;
+import com.jeno.application.data.repository.CompanyRepository;
+import com.jeno.application.data.repository.ContactRepository;
+import com.jeno.application.data.repository.StatusRepository;
 
 import dev.hilla.Endpoint;
 import dev.hilla.Nonnull;

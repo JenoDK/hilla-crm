@@ -1,6 +1,6 @@
-package com.example.application.data.repository;
+package com.jeno.application.data.repository;
 
-import com.example.application.data.entity.Company;
+import com.jeno.application.data.entity.Company;
 
 import java.util.UUID;
 

@@ -1,11 +1,11 @@
-package com.example.application.data.generator;
+package com.jeno.application.data.generator;
 
-import com.example.application.data.entity.Company;
-import com.example.application.data.entity.Contact;
-import com.example.application.data.entity.Status;
-import com.example.application.data.repository.CompanyRepository;
-import com.example.application.data.repository.ContactRepository;
-import com.example.application.data.repository.StatusRepository;
+import com.jeno.application.data.entity.Company;
+import com.jeno.application.data.entity.Contact;
+import com.jeno.application.data.entity.Status;
+import com.jeno.application.data.repository.CompanyRepository;
+import com.jeno.application.data.repository.ContactRepository;
+import com.jeno.application.data.repository.StatusRepository;
 import com.vaadin.exampledata.DataType;
 import com.vaadin.exampledata.ExampleDataGenerator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
