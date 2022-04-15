@@ -1,7 +1,7 @@
 import {crmStore} from 'Frontend/stores/app-store';
 import {makeAutoObservable, observable} from 'mobx';
-import Contact from "Frontend/generated/com/example/application/data/entity/Contact";
-import ContactModel from "Frontend/generated/com/example/application/data/entity/ContactModel";
+import Contact from "Frontend/generated/com/jeno/application/data/entity/Contact";
+import ContactModel from "Frontend/generated/com/jeno/application/data/entity/ContactModel";
 
 class ListViewStore {
 	filterText = '';

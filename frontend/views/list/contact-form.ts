@@ -5,7 +5,7 @@ import '@vaadin/button';
 import '@vaadin/combo-box';
 import '@vaadin/text-field';
 import {Binder, field} from "@hilla/form";
-import ContactModel from "Frontend/generated/com/example/application/data/entity/ContactModel";
+import ContactModel from "Frontend/generated/com/jeno/application/data/entity/ContactModel";
 import { crmStore, uiStore } from 'Frontend/stores/app-store';
 import {listViewStore} from "Frontend/views/list/list-view-store";
 
