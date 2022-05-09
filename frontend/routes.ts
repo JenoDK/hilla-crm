@@ -52,6 +52,12 @@ export const routes: ViewRoute[] = [
 		},
 	},
 	{
+		path: 'oauth2/authorization/google',
+		action: (_: Context, commands: Commands) => {
+			window.location.pathname = _.pathname;
+		},
+	},
+	{
 		path: '',
 		component: 'main-layout',
 		children: views,

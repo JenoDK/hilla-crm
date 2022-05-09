@@ -1,11 +1,14 @@
 package com.jeno.application.data.generator;
 
+import com.jeno.application.data.entity.AuthProviderType;
 import com.jeno.application.data.entity.Company;
 import com.jeno.application.data.entity.Contact;
 import com.jeno.application.data.entity.Status;
+import com.jeno.application.data.entity.User;
 import com.jeno.application.data.repository.CompanyRepository;
 import com.jeno.application.data.repository.ContactRepository;
 import com.jeno.application.data.repository.StatusRepository;
+import com.jeno.application.data.repository.UserRepository;
 import com.vaadin.exampledata.DataType;
 import com.vaadin.exampledata.ExampleDataGenerator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
@@ -28,7 +31,8 @@ public class DataGenerator {
 	public CommandLineRunner loadData(
 			ContactRepository contactRepository,
 			CompanyRepository companyRepository,
-			StatusRepository statusRepository) {
+			StatusRepository statusRepository,
+			UserRepository userRepository) {
 
 		return args -> {
 			Logger logger = LoggerFactory.getLogger(getClass());
@@ -63,6 +67,14 @@ public class DataGenerator {
 			}).collect(Collectors.toList());
 
 			contactRepository.saveAll(contacts);
+
+			logger.info("Adding the admin user");
+			User admin = new User();
+			admin.setName("admin");
+			admin.setEmail("admin@admin.com");
+			admin.setPassword("$2a$12$fB0CbSdKwCOYASJ8EumnGO2FFTCdm1kcD6obixk4ISfXITedLYcf.");
+			admin.setProvider(AuthProviderType.LOCAL);
+			userRepository.save(admin);
 
 			logger.info("Generated demo data");
 		};

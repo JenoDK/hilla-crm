@@ -25,6 +25,7 @@ export class LoginView extends View {
 					.error=${this.error}
 					?disabled=${uiStore.offline}>
 			</vaadin-login-form>
+			<a href="/oauth2/authorization/google" vaadin-router-ignore>Login with Google</a>
 			${uiStore.offline
 					? html` <b>You are offline. Login is only available while online.</b> `
 					: nothing}

@@ -21,3 +21,4 @@ webpack.generated.js
 
 # Contains secrets that shouldn’t go into the repository
 config/local/
+src/main/resources/application-dev.yml

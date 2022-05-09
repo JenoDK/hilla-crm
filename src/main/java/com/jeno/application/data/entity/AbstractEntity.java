@@ -17,6 +17,10 @@ public abstract class AbstractEntity {
 		return id;
 	}
 
+	public String getIdString() {
+		return id.toString();
+	}
+
 	public void setId(UUID id) {
 		this.id = id;
 	}
