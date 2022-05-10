@@ -54,7 +54,8 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 		setStatelessAuthentication(
 				http,
 				new SecretKeySpec(Base64.getDecoder().decode(applicationProperties.auth().tokenSecret()), JwsAlgorithms.HS256),
-				"com.jeno.application");
+				"com.jeno.application",
+				applicationProperties.auth().tokenExpirationSeconds());
 
 		http.oauth2Login()
 				.loginPage("/login")

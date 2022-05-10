@@ -11,7 +11,7 @@ We add `spring-boot-starter-oauth2-client` to our [pom.xml](pom.xml).
 
 ## Properties
 
-Add your client properties to the application.yml, in my case I added src/main/resources/application-dev.yml and added it to [.gitignore](.gitignore).
+Add your client properties to the application.yml.
 Check [this article](https://www.callicoder.com/spring-boot-security-oauth2-social-login-part-1/#creating-oauth2-apps-for-social-login) to see how to set up these apps in facebook, google or github.
 
 Example:
@@ -35,7 +35,15 @@ spring:
               - public_profile
 ```
 
-**Note:** secrets should never be committed to your remote repository!
+Other custom properties that can be set:
+
+| Property      | Description |
+| ----------- | ----------- |
+| `application.auth.tokenSecret`   | The secret used to sign JWT tokens with        |
+| `application.auth.tokenExpirationSeconds` | Amount of time in milliseconds when a token should expire, defaults to 172800000ms |
+
+
+**Note:** secrets should never be committed to your remote repository! In my case I added src/main/resources/application-dev.yml set the spring profile to dev with `-Dspring.profiles.active=dev` and added it to [.gitignore](.gitignore)
 
 
 ## Client-side
