@@ -1,16 +1,5 @@
 server:
   port: '${PORT:8080}'
-logging:
-  level:
-    com:
-      vaadin:
-        flow:
-          spring:
-            security: debug
-    org:
-      atmosphere: warn
-      springframework:
-        security: debug
 spring:
   mustache:
     check-template-location: false

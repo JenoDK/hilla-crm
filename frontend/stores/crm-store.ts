@@ -24,8 +24,6 @@ export class CrmStore {
 			},
 			{ autoBind: true }
 		);
-
-		this.initFromServer();
 	}
 
 	async initFromServer() {

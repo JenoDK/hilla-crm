@@ -13,14 +13,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithms;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import com.jeno.application.properties.ApplicationProperties;
 import com.jeno.application.security.local.CustomUserDetailsService;
-import com.jeno.application.security.oauth2.CookieOAuth2AuthorizationRequestRepository;
-import com.jeno.application.security.oauth2.OAuth2AuthenticationFailureHandler;
-import com.jeno.application.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.jeno.application.security.oauth2.OAuth2UserService;
+import com.vaadin.flow.spring.security.VaadinDefaultRequestCache;
 import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 
 @EnableWebSecurity
@@ -28,28 +27,19 @@ import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 
 	private final OAuth2UserService oAuth2UserService;
-	private final CookieOAuth2AuthorizationRequestRepository oAuth2AuthorizationRequestRepository;
-	private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-	private final TokenAuthenticationFilter tokenAuthenticationFilter;
 	private final CustomUserDetailsService customUserDetailsService;
 	private final ApplicationProperties applicationProperties;
+	private final VaadinDefaultRequestCache vaadinDefaultRequestCache;
 
 	public SecurityConfiguration(
 			OAuth2UserService oAuth2UserService,
-			CookieOAuth2AuthorizationRequestRepository oAuth2AuthorizationRequestRepository,
-			OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler,
-			OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler,
-			TokenAuthenticationFilter tokenAuthenticationFilter,
 			CustomUserDetailsService customUserDetailsService,
-			ApplicationProperties applicationProperties) {
+			ApplicationProperties applicationProperties,
+			VaadinDefaultRequestCache vaadinDefaultRequestCache) {
 		this.oAuth2UserService = oAuth2UserService;
-		this.oAuth2AuthorizationRequestRepository = oAuth2AuthorizationRequestRepository;
-		this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
-		this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
-		this.tokenAuthenticationFilter = tokenAuthenticationFilter;
 		this.customUserDetailsService = customUserDetailsService;
 		this.applicationProperties = applicationProperties;
+		this.vaadinDefaultRequestCache = vaadinDefaultRequestCache;
 	}
 
 	@Override
@@ -68,15 +58,15 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 
 		http.oauth2Login()
 				.loginPage("/login")
-//				.failureHandler(oAuth2AuthenticationFailureHandler)
-//				.successHandler(oAuth2AuthenticationSuccessHandler)
-//				.authorizationEndpoint()
-//					.authorizationRequestRepository(oAuth2AuthorizationRequestRepository)
-//					.and()
 				.userInfoEndpoint()
-					.userService(oAuth2UserService);
+					.userService(oAuth2UserService).and()
+				.successHandler(getRedirectSuccessHandler());
+	}
 
-//		http.addFilterAt(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	private AuthenticationSuccessHandler getRedirectSuccessHandler() {
+		SavedRequestAwareAuthenticationSuccessHandler requestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+		requestAwareAuthenticationSuccessHandler.setRequestCache(vaadinDefaultRequestCache);
+		return requestAwareAuthenticationSuccessHandler;
 	}
 
 	@Override

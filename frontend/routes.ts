@@ -30,15 +30,6 @@ export const views: ViewRoute[] = [
 	},
 ];
 
-const authGuard = async (context: Context, commands: Commands) => {
-	if (!uiStore.loggedIn) {
-		// Save requested path
-		sessionStorage.setItem('login-redirect-path', context.pathname);
-		return commands.redirect('/login');
-	}
-	return undefined;
-};
-
 export const routes: ViewRoute[] = [
 	{
 		path: 'login',
@@ -61,13 +52,12 @@ export const routes: ViewRoute[] = [
 		path: '',
 		component: 'main-layout',
 		children: views,
-		action: authGuard,
 	},
 ];
 
 autorun(() => {
 	if (uiStore.loggedIn) {
-		Router.go(sessionStorage.getItem('login-redirect-path') || '/');
+		Router.go('/');
 	} else {
 		if (location.pathname !== '/login') {
 			sessionStorage.setItem('login-redirect-path', location.pathname);

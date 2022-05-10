@@ -1,10 +1,8 @@
-import {makeAutoObservable} from 'mobx';
-import {
-	login as serverLogin,
-	logout as serverLogout,
-} from '@hilla/frontend';
-import { crmStore } from './app-store';
-import { ConnectionState, ConnectionStateStore } from '@vaadin/common-frontend';
+import {makeAutoObservable, runInAction} from 'mobx';
+import {login as serverLogin, logout as serverLogout,} from '@hilla/frontend';
+import {crmStore} from './app-store';
+import {ConnectionState, ConnectionStateStore} from '@vaadin/common-frontend';
+import {UserEndpoint} from "Frontend/generated/endpoints";
 
 class Message {
 	constructor(public text = '', public error = false, public open = false) {}
@@ -12,7 +10,7 @@ class Message {
 
 export class UiStore {
 	message = new Message();
-	loggedIn = true;
+	loggedIn = false;
 	offline = false;
 	connectionStateStore?: ConnectionStateStore;
 
@@ -20,6 +18,7 @@ export class UiStore {
 		makeAutoObservable(
 			this,
 			{
+				checkUserIsLoggedIn: false,
 				connectionStateListener: false,
 				connectionStateStore: false,
 				setupOfflineListener: false,
@@ -28,6 +27,16 @@ export class UiStore {
 				autoBind: true
 			}
 		);
+
+		this.checkUserIsLoggedIn();
+	}
+
+	async checkUserIsLoggedIn() {
+		const data = await UserEndpoint.isLoggedIn();
+
+		runInAction(() => {
+			this.setLoggedIn(data);
+		});
 	}
 
 	showSuccess(message: string) {
@@ -62,10 +71,10 @@ export class UiStore {
 	}
 
 	setLoggedIn(loggedIn: boolean) {
-		this.loggedIn = loggedIn;
-		if (loggedIn) {
+		if (!this.loggedIn && loggedIn) {
 			crmStore.initFromServer();
 		}
+		this.loggedIn = loggedIn;
 	}
 
 	connectionStateListener = () => {
